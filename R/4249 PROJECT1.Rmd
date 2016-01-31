@@ -1,0 +1,111 @@
+
+```{r}
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(choroplethr)
+library(choroplethrMaps)
+library(Hmisc)
+
+#select variable: wage,states,age,citizenship,class of work,education level,Gender,field of degree, Industry recode, palce of work, Employment status
+cols <- c("WAGP", "ST", "AGEP", "CIT", "COW", "SCHL", "SEX" , "FOD1P","INDP" , "NAICSP" , "POWSP" , "ESR", "PWGTP")
+pusa <- fread("~/Desktop/ss13pusa.csv", select = cols)
+pusb <- fread("~/Desktop/ss13pusb.csv", select = cols)
+
+```
+
+
+```{r}
+#clean data
+pus <- subset(rbind(pusa, pusb))
+pus <- pus[pus$FOD1P == 3700 | pus$FOD1P == 3701 | pus$FOD1P == 3702 | pus$FOD1P == 2102 | pus$FOD1P == 6212 | pus$FOD1P == 6207 | pus$FOD1P == 6202]
+
+##Rename field of degree
+pus$FOD1P[pus$FOD1P == 3700 | pus$FOD1P == 3701] <- "MATH"
+pus$FOD1P[pus$FOD1P == 6207] <- "FINANCE"
+pus$FOD1P[pus$FOD1P == 3702 | pus$FOD1P == 6212 | pus$FOD1P == 6202] <- "STATISTICS"
+pus$FOD1P[pus$FOD1P == 2102] <- "COMPUTER SCIENCE"
+pus$FOD1P <- factor(pus$FOD1P)
+
+##Rename education level
+pus$SCHL[pus$SCHL == 21] <- "Bachelor's Degree"
+pus$SCHL[pus$SCHL == 22] <- "Master's Degree"
+pus$SCHL[pus$SCHL == 23] <- "Professional degree"
+pus$SCHL[pus$SCHL == 24] <- "Doctorate degree"
+pus$SCHL <- factor(pus$SCHL)
+
+##Rename gender
+pus$SEX[pus$SEX == 1] <- "Male"
+pus$SEX[pus$SEX == 2] <- "Female"
+pus$SEX <- factor(pus$SEX)
+
+##Rename Employment status
+pus$ESR[pus$ESR == 1 | pus$ESR == 4] <- "Employed"
+pus$ESR[pus$ESR == 2 | pus$ESR == 5] <- "Employed/Not at work"
+pus$ESR[pus$ESR == 3 ] <- "Unemployed"
+pus$ESR[pus$ESR == "NA" | pus$ESR == 6] <- "Not in labor force"
+pus$ESR <- factor(pus$ESR)
+
+pus$COW <- factor(pus$COW)
+levels(pus$COW) <- c("Private profit", "Private non-profit", "Local government", "State government", "Federal government", "Self-employed", "Self-employed", "Working without pay", "Unemployed")
+
+```
+
+##plots
+```{r}
+##Major by gender
+ggplot(pus, aes(x = FOD1P, y = PWGTP, fill = FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ SEX) +  labs(x="Majors",title="Major by Gender") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
+
+##Education level by majors
+ggplot(pus, aes(x = FOD1P, y = PWGTP, fill = FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ SCHL) + labs(x="Majors",title = "Education level by majors") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
+
+##Employment status by major
+ggplot(pus, aes(x = FOD1P, y = PWGTP, fill= FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ ESR) + labs(x="Majors",title = "Employment status by majors") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
+  
+##Class of Wokr by majors
+ggplot(pus, aes(x = COW, y = PWGTP, fill= COW)) + geom_bar(stat = "identity")  + facet_grid(. ~ FOD1P) + labs(x="Majors",title = "Class of Wokr by majors") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
+```
+
+##Wage vs Major
+```{r}
+df <- data.frame(value = pus$WAGP, category =  pus$FOD1P, weight = pus$PWGTP)
+
+ggplot(df, aes(x = category, y = value, weight = weight)) +
+geom_boxplot(aes(weight = NULL), width=0.6, colour = "#3366FF") +
+stat_summary( fun.y ="wtd.mean", geom ="point",
+shape = 23, size = 3, fill = c(1:4)) +  ylim(0, 200000)
+```
+
+##STAT_Wage vs Education level
+```{r}
+df2 <- data.frame(value = pus$WAGP[pus$FOD1P == "STATISTICS"], category =  pus$SCHL[pus$FOD1P == "STATISTICS"], weight = pus$PWGTP[pus$FOD1P == "STATISTICS"])
+
+ggplot(df2, aes(x = category, y = value, weight = weight)) +
+geom_boxplot(aes(weight = NULL), width=0.6, colour = "#3366FF") +
+stat_summary( fun.y ="wtd.mean", geom ="point", shape = 23, size = 3, fill = c(1:4)) + ylim(0, 200000)
+
+```
+
+
+
+#mapping
+```{r}
+## map for only statistics majors
+junk <- data.frame(tapply(pus$PWGTP[pus$FOD1P == "STATISTICS"], pus$POWSP[pus$FOD1P == "STATISTICS"] , FUN = sum))
+junk <- junk[-c(51:52),]
+junk <- data.frame(junk)
+
+junk$region <- c("AL","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY")
+
+data(state.regions)
+statenames <- data.frame(cbind(state.regions[,1],state.regions[,2]))
+names(statenames) <- c("region2", "region")
+junk2 <- merge(junk,statenames, by="region")
+names(junk2) <- c("region2", "value", "region")
+junk2$region2 <- tolower(as.character(junk2$region2))
+junk2$region <- tolower(as.character(junk2$region))
+png("ONLY_STAT.png", width=800)
+state_choropleth(junk2)
+dev.off()
+```
+
