@@ -85,7 +85,17 @@ geom_boxplot(aes(weight = NULL), width=0.6, colour = "#3366FF") +
 stat_summary( fun.y ="wtd.mean", geom ="point", shape = 23, size = 3, fill = c(1:4)) + ylim(0, 200000)
 
 ```
+# Summary and Chi squared test
+```{r}
+S_wage<-pus$WAGP[pus$FOD1P == "STATISTICS"]
+S_edul<-pus$SCHL[pus$FOD1P == "STATISTICS"]
+by(S_wage, S_edul, summary)
+#Observation
+#People with higher education level are likely to earn more.
+chisq.test(table(S_wage,S_edul))
+#The Chi-squared test revealed a signicant assocation between wage and education level in the field of statistics.
 
+```
 
 
 #mapping
