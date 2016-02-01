@@ -15,12 +15,13 @@ mydata<- subset(rbind(mydata1, mydata2))
 which(colnames(mydata)=="pwgtp1")
 cols_1<- c("WAGP", "ST", "AGEP", "CIT", "COW", "SCHL", "SEX" , "FOD1P","INDP" , "NAICSP" , "POWSP" , "ESR","PWGTP")
 pus_new<-select(mydata,one_of(cols_1),204:283)
+pus_new<-as.data.frame(pus_new)
 
 #Example:How to calulate the mean and Standard Error of Income level?
 #Using Survey Package
 library(survey)
 df<-pus_new$FOD1P==
-df1<-svrepdes(variables=pus_new[,1:13], 
+df1<-svrepdesign(variables=pus_new[,1:13], 
 repweights=pus_new[,14:93], type="BRR",combined.weights=TRUE,
 weights=pus_new$PWGTP)
 summary(df1)
