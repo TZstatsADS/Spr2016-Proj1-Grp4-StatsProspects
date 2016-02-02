@@ -26,7 +26,7 @@ weights=pus_new$PWGTP)
 summary(df1)
 svymean(~ WAGP,df1, na.rm = T)
 
-#If ONLY want to know the SE and Mean of Statistics Inconme?
+#If ONLY want to know the SE and Mean of Statistics Income?
 pus_new$FOD1P[pus_new$FOD1P == 3702 | pus_new$FOD1P == 6212 | pus_new$FOD1P == 6202]<-"Statistics"
 df<-subset(pus_new, pus_new$FOD1P=="Statistics")
 df2<-svrepdesign(variables=df[,1:13], 
