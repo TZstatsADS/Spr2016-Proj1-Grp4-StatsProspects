@@ -11,13 +11,13 @@ library(Hmisc)
 cols <- c("WAGP", "ST", "AGEP", "CIT", "COW", "SCHL", "SEX" , "FOD1P","INDP" , "NAICSP" , "POWSP" , "ESR", "PWGTP")
 pusa <- fread("~/Desktop/ss13pusa.csv", select = cols)
 pusb <- fread("~/Desktop/ss13pusb.csv", select = cols)
-
+pus <- subset(rbind(pusa, pusb))
+write.csv(pus, file = "finaldata.csv",row.names = FALSE)
 ```
 
 
 ```{r}
 #clean data
-pus <- subset(rbind(pusa, pusb))
 pus <- pus[pus$FOD1P == 3700 | pus$FOD1P == 3701 | pus$FOD1P == 3702 | pus$FOD1P == 2102 | pus$FOD1P == 6212 | pus$FOD1P == 6207 | pus$FOD1P == 6202]
 
 ##Rename field of degree
@@ -73,7 +73,7 @@ df <- data.frame(value = pus$WAGP, category =  pus$FOD1P, weight = pus$PWGTP)
 ggplot(df, aes(x = category, y = value, weight = weight)) +
 geom_boxplot(aes(weight = NULL), width=0.6, colour = "#3366FF") +
 stat_summary( fun.y ="wtd.mean", geom ="point",
-shape = 23, size = 3, fill = c(1:4)) +  ylim(0, 200000)
+shape = 23, size = 3, fill = c(1:4)) +  ylim(0, 200000) + labs(title = "Wages by Majors")
 ```
 
 ##STAT_Wage vs Education level
@@ -82,10 +82,9 @@ df2 <- data.frame(value = pus$WAGP[pus$FOD1P == "STATISTICS"], category =  pus$S
 
 ggplot(df2, aes(x = category, y = value, weight = weight)) +
 geom_boxplot(aes(weight = NULL), width=0.6, colour = "#3366FF") +
-stat_summary( fun.y ="wtd.mean", geom ="point", shape = 23, size = 3, fill = c(1:4)) + ylim(0, 200000)
+stat_summary( fun.y ="wtd.mean", geom ="point", shape = 23, size = 3, fill = c(1:4)) + ylim(0, 200000) + labs(title = "Stat_wages by Education levels")
 
 ```
-
 
 
 #mapping
@@ -107,5 +106,14 @@ junk2$region <- tolower(as.character(junk2$region))
 png("ONLY_STAT.png", width=800)
 state_choropleth(junk2)
 dev.off()
+```
+
+#zoom out maps
+```{r}
+state_choropleth(junk2,
+                 title      = "Stat Major vs Place of Work",
+                 legend     = "Population",
+                 num_colors = 1,
+                 zoom       = c("california", "new york", "texas"))
 ```
 
