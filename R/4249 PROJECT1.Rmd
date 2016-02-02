@@ -114,6 +114,6 @@ state_choropleth(junk2,
                  title      = "Stat Major vs Place of Work",
                  legend     = "Population",
                  num_colors = 1,
-                 zoom       = c("california", "new york", "texas"))
+                 zoom       = c("california", "new york", "texas","georgia","florida","illinois","pennsylvania"))
 ```
 
