@@ -190,7 +190,7 @@ chisq.test(table(S_wage,S_edul))
 #With weights
 wtd.chi.sq(S_wage, S_edul, weight=weight)
 ```
-#The Chi-squared test revealed a statistically signicant assocation between wage and education level in the field of statistics. So, we should keep purusing those higher degrees not only for the advancement of personal knowledge, but for higher wages aswell.
+The Chi-squared test revealed a statistically signicant assocation between wage and education level in the field of statistics. So, we should keep purusing those higher degrees not only for the advancement of personal knowledge, but for higher wages aswell.
 
 So now that we have established that we will have a job, we will make some money, where will we end up? We conclude with a spatial examination of where we will live.
 
