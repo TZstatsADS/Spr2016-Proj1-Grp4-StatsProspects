@@ -1,6 +1,6 @@
 ---
 title: "So We Studied Statistics, Now What?"
-author: "Nicole LaPointe Jameson"
+author: "Group 4"
 date: "February 2, 2016"
 output:
   html_document:
@@ -8,7 +8,7 @@ output:
     number_sections: true
     theme: flatly
     highlight: tango
-    toc: yes
+    toc: true
 ---
 #Introduction
 
