@@ -121,7 +121,7 @@ To see what we are working with, we first looked at some basic plots to understa
 First, we wanted to see who was in the field of study. We looked into counts of major, controlling for gender.
 
 ###Major by Gender
-![Major By Gender](/blob/master/figs/Rplot.jpeg)
+![Major By Gender](https://github.com/TZstatsADS/cycle1-4/blob/master/figs/Rplot.jpeg)
 ```{r, echo=FALSE}
 ggplot(pus, aes(x = FOD1P, y = PWGTP, fill = FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ SEX) +  labs(x="Majors",title="Major by Gender") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
 ```
