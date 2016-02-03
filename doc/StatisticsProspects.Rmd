@@ -4,11 +4,11 @@ author: "Group 4"
 date: "February 2, 2016"
 output:
   html_document:
-    fig_width: 9
-    number_sections: true
-    theme: flatly
+    fig_width: 8
+    number_sections: yes
+    theme: united
     highlight: tango
-    toc: true
+    toc: yes
 ---
 #Introduction
 
@@ -210,9 +210,9 @@ wtd.chi.sq(S_wage, S_edul, weight=weight)
 ```
 The Chi-squared test revealed a statistically signicant assocation (p<0) between wage and education level in the field of statistics. So, we should keep pursuing those higher degrees not only for the advancement of personal knowledge, but for higher wages aswell.
 
-So now that we have established that we will have a job, we will make some money, where will we end up? We conclude with a spatial examination of where we will live.
+So now that we have established that we will have a job, we will make some money, where will we end up? We conclude with a spatial examination of where we will work.
 
-##Where are we located?
+##Where are we Working?
 ###Mapping Just Statistics Majors
 ![Location](https://github.com/TZstatsADS/cycle1-4/blob/master/figs/ONLY_STAT.png)
 ```{r}
@@ -257,15 +257,3 @@ Be proud to be a statistician (especially a female statistician) becuase though 
 
 #The Next Steps
 If someone wanted to pursure this further with their own survery, an examination of the relationship with where statisticans live would be very interesting, espeically since it is so skewed across the country. The group theorized that the states that had large numbers were also states with big urban centers, prominent universities, and hubs for tech and government work, but a formal analysis would need to be done.
-
-
-
-
-
-
-
-
-
-
-
-
