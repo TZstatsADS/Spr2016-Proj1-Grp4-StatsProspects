@@ -1,24 +1,28 @@
 ---
-title: "Project 1_using weights"
+title: "Loading Data With Weights"
 output: html_document
 ---
+##Read the Data into R
 ```{r}
-#reading data
 library(data.table)
 mydata1<-fread("~/Desktop/ss13pusa.csv")
 mydata2<-fread("~/Desktop/ss13pusb.csv")
 
-#combining data
+#Combine the two separate datasets
 mydata<- subset(rbind(mydata1, mydata2))
 
-#selecting data
+#Select the Columns we wish to use in our analysis
 which(colnames(mydata)=="pwgtp1")
 cols_1<- c("WAGP", "ST", "AGEP", "CIT", "COW", "SCHL", "SEX" , "FOD1P","INDP" , "NAICSP" , "POWSP" , "ESR","PWGTP")
 pus_new<-select(mydata,one_of(cols_1),204:283)
 pus_new<-as.data.frame(pus_new)
 
-#Example:How to calulate the mean and Standard Error of Income level?
-#Using Survey Package
+```
+
+##Using Weights in Summary Statistics
+```{r}
+#Example: How to calulate the mean and standard error of Income level using weights utilizing the "Survey" package
+
 library(survey)
 df1<-svrepdesign(variables=pus_new[,1:13], 
 repweights=pus_new[,14:93], type="BRR",combined.weights=TRUE,
@@ -26,7 +30,8 @@ weights=pus_new$PWGTP)
 summary(df1)
 svymean(~ WAGP,df1, na.rm = T)
 
-#If ONLY want to know the SE and Mean of Statistics Income?
+#If We only want to know the SE and Mean of Statistics Income?
+
 pus_new$FOD1P[pus_new$FOD1P == 3702 | pus_new$FOD1P == 6212 | pus_new$FOD1P == 6202]<-"Statistics"
 df<-subset(pus_new, pus_new$FOD1P=="Statistics")
 df2<-svrepdesign(variables=df[,1:13], 
