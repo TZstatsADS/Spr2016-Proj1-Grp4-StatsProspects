@@ -1,6 +1,6 @@
 ---
 title: "So We Studied Statistics, Now What?"
-author: "Group 4: Qianyun, Nicole and Xiaoyu "
+author: "Group 4: Qianyun, Nicole and  "
 date: "February 2, 2016"
 output:
   html_document:
@@ -109,9 +109,12 @@ repweights=pus_new[,14:93], type="BRR",combined.weights=TRUE,
 weights=pus_new$PWGTP)
 summary(df1)
 svymean(~ WAGP,df1, na.rm = T)
+```
+  mean     SE
+WAGP 25930 14.395
 
 #What if We only want to know the SE and Mean of Statistics Income?
-
+```{r}
 pus_new$FOD1P[pus_new$FOD1P == 3702 | pus_new$FOD1P == 6212 | pus_new$FOD1P == 6202]<-"Statistics"
 df<-subset(pus_new, pus_new$FOD1P=="Statistics")
 df2<-svrepdesign(variables=df[,1:13], 
@@ -120,6 +123,9 @@ weights=df$PWGTP)
 summary(df2)
 svymean(~ WAGP,df2, na.rm = T)
 ```
+  mean     SE
+WAGP 72600 656.27
+
 
 ##Looking At Initial Trends
 To see what we are working with, we first looked at some basic plots to understand how the data's shape and distribution fell.
@@ -201,6 +207,21 @@ At first glance, people with higher education level are likely to earn more.
 ```{r, echo=FALSE}
 by(S_wage, S_edul, summary)
 ```
+S_edul: Bachelor's Degree
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0   25000   60000   69050   97000  550000 
+--------------------------------------------------------------------- 
+S_edul: Master's Degree
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0   30000   72000   82940  110000  560000 
+--------------------------------------------------------------------- 
+S_edul: Professional degree
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0   15000   69000  133700  196000  560000 
+--------------------------------------------------------------------- 
+S_edul: Doctorate degree
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0   50000   90000   92000  121500  475000 
 
 We then ran a chi-squared test and produced the following:
 ```{r}
@@ -208,7 +229,16 @@ chisq.test(table(S_wage,S_edul))
 #With weights
 wtd.chi.sq(S_wage, S_edul, weight=weight)
 ```
-The Chi-squared test revealed a statistically signicant assocation (p=0) between wage and education level in the field of statistics. So, we should keep pursuing those higher degrees not only for the advancement of personal knowledge, but for higher wages aswell.
+Pearson's Chi-squared test
+
+data:  table(S_wage, S_edul)
+X-squared = 1509, df = 1083, p-value < 2.2e-16
+
+Chisq       df  p.value 
+160913.6   1083.0      0.0
+
+
+The Chi-squared test revealed a statistically signicant assocation (p<0) between wage and education level in the field of statistics. So, we should keep pursuing those higher degrees not only for the advancement of personal knowledge, but for higher wages aswell.
 
 So now that we have established that we will have a job, we will make some money, where will we end up? We conclude with a spatial examination of where we will work.
 
