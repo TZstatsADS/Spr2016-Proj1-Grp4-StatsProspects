@@ -1,6 +1,6 @@
 ---
 title: "So We Studied Statistics, Now What?"
-author: "Group 4: Qianyun, Nicole and  "
+author: "Group 4: Qianyun, Nicole and Xiaoyu "
 date: "February 2, 2016"
 output:
   html_document:
