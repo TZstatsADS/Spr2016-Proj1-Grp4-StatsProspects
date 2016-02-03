@@ -121,21 +121,21 @@ To see what we are working with, we first looked at some basic plots to understa
 First, we wanted to see who was in the field of study. We looked into counts of major, controlling for gender.
 
 ###Major by Gender
-![Major By Gender](./blob/master/figs/Rplot.jpeg)
+![Major By Gender](/blob/master/figs/Rplot.jpeg)
 ```{r, echo=FALSE}
 ggplot(pus, aes(x = FOD1P, y = PWGTP, fill = FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ SEX) +  labs(x="Majors",title="Major by Gender") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
 ```
 We can see that males are much more represented in all of the fields. 
 
 ###Education Level by Major
-![Edu Level](./blob/master/figs/Rplot02.jpeg)
+![Edu Level](/blob/master/figs/Rplot02.jpeg)
 ```{r, echo=FALSE}
 ggplot(pus, aes(x = FOD1P, y = PWGTP, fill = FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ SCHL) + labs(x="Majors",title = "Education level by majors") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
 ```
 The bachelor's degree is the most popular degree, following with the master's degree. A math degree is the mode for PhD's, Master's, and Professional degrees, but is much below in frequency for Bachelor's Degrees. This "flip" in the trend is interesting, and one could extrapolate to see if those who studied math needed a higher degree to find work/pursue their passions. To try to shed some light on that, we then looked at Employment status.
 
 ###Employment status by major
-![Employment Status](./blob/master/figs/Rplot01.jpeg)
+![Employment Status](/blob/master/figs/Rplot01.jpeg)
 ```{r, echo=FALSE}
 ggplot(pus, aes(x = FOD1P, y = PWGTP, fill= FOD1P)) + geom_bar(stat = "identity") + facet_grid(. ~ ESR) + labs(x="Majors",title = "Employment status by majors") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
 ```
@@ -144,7 +144,7 @@ The good news for all of us is that most of us are employed! The next most popul
 But now, where do we find work?
 
 ###Class of work by major
-![Work Sector](./blob/master/figs/Rplot03.jpeg)
+![Work Sector](/blob/master/figs/Rplot03.jpeg)
 ```{r, echo=FALSE}
 ggplot(pus, aes(x = COW, y = PWGTP, fill= COW)) + geom_bar(stat = "identity")  + facet_grid(. ~ FOD1P) + labs(x="Majors",title = "Class of Work by Major") + ylim(0, 1000000) + theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1, vjust = 1))
 ```
@@ -155,7 +155,7 @@ So the good news is, it is likely we will get jobs. But no need to be shy, the n
 Thus, we examined the range of income by major for each sector, and produced the following plot:
 
 ###Wage vs Major
-![Wage by Major](./blob/master/figs/Rplot04.jpeg)
+![Wage by Major](/blob/master/figs/Rplot04.jpeg)
 ```{r, echo=FALSE}
 df <- data.frame(value = pus$WAGP, category =  pus$FOD1P, weight = pus$PWGTP)
 
@@ -169,7 +169,7 @@ Good news is, us statisticians don't need to worry!  Median income falls around 
 But now we face one more level of concern. Just in this class we have a variety of education levels. As we saw earlier, Math students needed to get higher degrees (and their salaries weren't as high as ours!) Do we need higher degrees too?
 
 ##But what does that mean for us?
-![Major By Gender](./blob/master/figs/Rplot05.jpeg)
+![Major By Gender](/blob/master/figs/Rplot05.jpeg)
 ```{r}
 df2 <- data.frame(value = pus$WAGP[pus$FOD1P == "STATISTICS"], category =  pus$SCHL[pus$FOD1P == "STATISTICS"], weight = pus$PWGTP[pus$FOD1P == "STATISTICS"])
 
@@ -206,7 +206,7 @@ So now that we have established that we will have a job, we will make some money
 
 ##Where are we located?
 ###Mapping Just Statistics Majors
-![Location](./blob/master/figs/ONLY_STAT.png)
+![Location](/blob/master/figs/ONLY_STAT.png)
 ```{r}
 junk <- data.frame(tapply(pus$PWGTP[pus$FOD1P == "STATISTICS"], pus$POWSP[pus$FOD1P == "STATISTICS"] , FUN = sum))
 junk <- junk[-c(51:52),]
@@ -232,7 +232,7 @@ As you can see, there aren't many of us to begin with (26,199 is the highest cou
 
 
 #Location at a Higher Granularity
-![Location Pt 2](./blob/master/figs/zoom_out.png)
+![Location Pt 2](/blob/master/figs/zoom_out.png)
 ```{r}
 state_choropleth(junk2,
                  title      = "Stat Major vs Place of Work",
