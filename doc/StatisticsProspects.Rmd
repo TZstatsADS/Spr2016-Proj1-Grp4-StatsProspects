@@ -6,7 +6,7 @@ output:
   html_document:
     fig_width: 9
     number_sections: true
-    theme: cyborg
+    theme: flatly
     highlight: tango
     toc: yes
 ---
@@ -214,7 +214,7 @@ So now that we have established that we will have a job, we will make some money
 
 ##Where are we located?
 ###Mapping Just Statistics Majors
-![Location](https://github.com/TZstatsADS/cycle1-4/blob/master/figs/ONLY-STAT.png)
+![Location](https://github.com/TZstatsADS/cycle1-4/blob/master/figs/ONLY_STAT.png)
 ```{r}
 junk <- data.frame(tapply(pus$PWGTP[pus$FOD1P == "STATISTICS"], pus$POWSP[pus$FOD1P == "STATISTICS"] , FUN = sum))
 junk <- junk[-c(51:52),]
