@@ -3,7 +3,9 @@
 
 ##Team Members
 Nicole LaPointe Jameson:(nml2145)
+
 Xiaoyu Wang (UNI:xw2419)
+
 Qianyun Zhang(UNI:qz2246)
 
 ---
