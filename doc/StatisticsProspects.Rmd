@@ -110,8 +110,8 @@ weights=pus_new$PWGTP)
 summary(df1)
 svymean(~ WAGP,df1, na.rm = T)
 ```
-  mean     SE
-WAGP 25930 14.395
+
+Mean and SE of WAGP: 25930, 14.395
 
 #What if We only want to know the SE and Mean of Statistics Income?
 ```{r}
@@ -123,8 +123,8 @@ weights=df$PWGTP)
 summary(df2)
 svymean(~ WAGP,df2, na.rm = T)
 ```
-  mean     SE
-WAGP 72600 656.27
+Mean and SE of WAGP: 72600, 656.27
+
 
 
 ##Looking At Initial Trends
@@ -207,21 +207,6 @@ At first glance, people with higher education level are likely to earn more.
 ```{r, echo=FALSE}
 by(S_wage, S_edul, summary)
 ```
-S_edul: Bachelor's Degree
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0   25000   60000   69050   97000  550000 
---------------------------------------------------------------------- 
-S_edul: Master's Degree
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0   30000   72000   82940  110000  560000 
---------------------------------------------------------------------- 
-S_edul: Professional degree
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0   15000   69000  133700  196000  560000 
---------------------------------------------------------------------- 
-S_edul: Doctorate degree
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0   50000   90000   92000  121500  475000 
 
 We then ran a chi-squared test and produced the following:
 ```{r}
