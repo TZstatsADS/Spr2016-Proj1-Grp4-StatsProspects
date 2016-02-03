@@ -2,7 +2,13 @@
 title: "So We Studied Statistics, Now What?"
 author: "Nicole LaPointe Jameson"
 date: "February 2, 2016"
-output: html_document
+output:
+  html_document:
+    fig_width: 9
+    number_sections: true
+    theme: cyborg
+    highlight: tango
+    toc: yes
 ---
 #Introduction
 
